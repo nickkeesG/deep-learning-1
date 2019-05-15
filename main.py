@@ -6,7 +6,16 @@ import numpy as np
 np.random.seed(1000)
 from keras.datasets import cifar10
 
+def oneHot(y, n_class):
+    result = np.zeros(y.shape[0], n_class)
+    for i in range(0, y.shape[0]):
+        result[i][y[i]] = 1
+    return result
+    
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
+
+y_train = oneHot(y_train, 10)
+y_test = oneHot(y_test, 10)
 
 #Instantiate an empty model
 model = Sequential()
