@@ -2,10 +2,17 @@ import keras
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout, Flatten, Conv2D, MaxPooling2D
 from keras.layers.normalization import BatchNormalization
-import numpy as np
-np.random.seed(1000)
+from keras.applications.resnet50 import ResNet50
 from keras.datasets import cifar10
+import numpy as np
 
+def one_hot(y, n_classes):
+    result = np.zeros((y.shape[0], n_classes))
+    for i in range(0, y.shape[0]):
+        result[i, y[i]] = 1
+    return result
+
+<<<<<<< HEAD
 def oneHot(y, n_class):
     result = np.zeros(y.shape[0], n_class)
     for i in range(0, y.shape[0]):
@@ -17,6 +24,15 @@ def oneHot(y, n_class):
 y_train = oneHot(y_train, 10)
 y_test = oneHot(y_test, 10)
 
+=======
+np.random.seed(1000)
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+
+y_train = one_hot(y_train, 10)
+y_test = one_hot(y_test, 10)
+
+'''
+>>>>>>> 7621c9190145ebe21205adc4de2d6e9757e0f8d7
 #Instantiate an empty model
 model = Sequential()
 
@@ -67,6 +83,9 @@ model.add(Dropout(0.4))
 # Output Layer
 model.add(Dense(10))
 model.add(Activation('softmax'))
+'''
+
+model = ResNet50(include_top=False, weights=None, input_shape=(32, 32, 3), classes=10)
 
 model.summary()
 
